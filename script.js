@@ -1,6 +1,6 @@
 (() => {
   const AUDIO_SRC = 'assets/musica-tony.mp3.mpeg';
-  const DEFAULT_VOLUME = 0.18;
+  const DEFAULT_VOLUME = 0.25;
   let observer;
 
   function setupReveal() {
@@ -110,10 +110,11 @@
 
     window.addEventListener('popstate', () => navigate(window.location.href, false));
 
-    // Após uma interação prévia, alguns navegadores permitem retomar automaticamente.
-    if (localStorage.getItem('tonyMusicEnabled') === 'true') {
-      audio.play().catch(() => {});
-    }
+    // Tenta iniciar automaticamente em 25%. Alguns navegadores podem bloquear áudio com som
+    // até a primeira interação do usuário; nesse caso, o botão de play continua disponível.
+    localStorage.setItem('tonyMusicEnabled', 'true');
+    audio.play().catch(() => {});
+
   }
 
   async function navigate(href, pushState) {
