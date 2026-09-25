@@ -16,6 +16,42 @@
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   }
 
+  function setupMobileMenu() {
+    document.addEventListener('click', (event) => {
+      const toggle = event.target.closest('.menu-toggle');
+      if (toggle) {
+        const nav = toggle.closest('.nav');
+        const links = nav?.querySelector('.nav-links');
+        if (!links) return;
+        const isOpen = links.classList.toggle('open');
+        toggle.classList.toggle('active', isOpen);
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        toggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+        return;
+      }
+
+      const clickedNavLink = event.target.closest('.nav-links a');
+      if (clickedNavLink) {
+        const nav = clickedNavLink.closest('.nav');
+        nav?.querySelector('.nav-links')?.classList.remove('open');
+        const btn = nav?.querySelector('.menu-toggle');
+        btn?.classList.remove('active');
+        btn?.setAttribute('aria-expanded', 'false');
+        btn?.setAttribute('aria-label', 'Abrir menu');
+        return;
+      }
+
+      const openNav = document.querySelector('.nav-links.open');
+      if (openNav && !event.target.closest('.nav')) {
+        openNav.classList.remove('open');
+        const btn = openNav.closest('.nav')?.querySelector('.menu-toggle');
+        btn?.classList.remove('active');
+        btn?.setAttribute('aria-expanded', 'false');
+        btn?.setAttribute('aria-label', 'Abrir menu');
+      }
+    });
+  }
+
   function createPlayer() {
     if (document.getElementById('site-audio')) return;
 
@@ -147,6 +183,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     setupReveal();
+    setupMobileMenu();
     createPlayer();
   });
 })();
