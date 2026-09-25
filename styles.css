@@ -98,3 +98,6 @@
 .music-volume{width:95px;accent-color:var(--gold);cursor:pointer}
 @media(max-width:900px){.music-player{top:78px;right:12px;padding:7px 8px}.music-volume{width:76px}}
 @media(max-width:560px){.music-player{top:74px;right:10px}.music-player button{width:32px;height:32px}.music-volume{width:64px}}
+
+.teamdm-close img{object-position:center 24%;transform:scale(1.16)}
+.teamdm-close:hover img{transform:scale(1.19)}
